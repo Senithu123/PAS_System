@@ -1,0 +1,65 @@
+@model PAS.Web.ViewModels.AdminSettingsViewModel
+
+@{
+    ViewData["Title"] = "System Settings";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>System Settings</h2>
+        <p>Control proposal submission, topic publishing, matching, and system rules.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Admin" asp-action="Proposals" class="btn btn-outline-light">Proposals</a>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Configuration</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <form asp-action="Settings" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsProposalSubmissionOpen" class="form-check-input" />
+            <label asp-for="IsProposalSubmissionOpen" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsTopicPublishingOpen" class="form-check-input" />
+            <label asp-for="IsTopicPublishingOpen" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsMatchingOpen" class="form-check-input" />
+            <label asp-for="IsMatchingOpen" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check form-switch mb-4">
+            <input asp-for="AllowFileUploads" class="form-check-input" />
+            <label asp-for="AllowFileUploads" class="form-check-label"></label>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="MaxPreferencesPerStudent" class="form-label"></label>
+            <input asp-for="MaxPreferencesPerStudent" class="form-control" />
+            <span asp-validation-for="MaxPreferencesPerStudent" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
