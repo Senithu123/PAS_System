@@ -1,0 +1,67 @@
+﻿@model PAS.Web.ViewModels.CreateProposalViewModel
+
+@{
+    ViewData["Title"] = "Submit Proposal";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Submit Proposal</h2>
+        <p>Create your proposal and optionally upload a supporting file.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Proposal" asp-action="MyProposals" class="btn btn-outline-light">My Proposals</a>
+    </div>
+</div>
+
+<div class="student-panel">
+    <div class="student-panel-title">Proposal Form</div>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ResearchAreaId" class="form-label"></label>
+            <select asp-for="ResearchAreaId" asp-items="ViewBag.ResearchAreas" class="form-select">
+                <option value="">-- Select Research Area --</option>
+            </select>
+            <span asp-validation-for="ResearchAreaId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Abstract" class="form-label"></label>
+            <textarea asp-for="Abstract" class="form-control"></textarea>
+            <span asp-validation-for="Abstract" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TechnicalStack" class="form-label"></label>
+            <textarea asp-for="TechnicalStack" class="form-control"></textarea>
+            <span asp-validation-for="TechnicalStack" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="ProposalFile" class="form-label"></label>
+            <input asp-for="ProposalFile" type="file" class="form-control" accept=".pdf,.doc,.docx" />
+            <span asp-validation-for="ProposalFile" class="text-danger"></span>
+            <small class="text-muted">Allowed: PDF, DOC, DOCX. Max size: 10 MB.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Proposal</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

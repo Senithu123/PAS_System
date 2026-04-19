@@ -1,0 +1,77 @@
+﻿@model PAS.Web.ViewModels.CreateProposalViewModel
+
+@{
+    ViewData["Title"] = "Edit Proposal";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Edit Proposal</h2>
+        <p>Update your proposal details and replace the uploaded file if needed.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Proposal" asp-action="MyProposals" class="btn btn-outline-light">My Proposals</a>
+    </div>
+</div>
+
+<div class="student-panel">
+    <div class="student-panel-title">Edit Proposal Form</div>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ResearchAreaId" class="form-label"></label>
+            <select asp-for="ResearchAreaId" asp-items="ViewBag.ResearchAreas" class="form-select">
+                <option value="">-- Select Research Area --</option>
+            </select>
+            <span asp-validation-for="ResearchAreaId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Abstract" class="form-label"></label>
+            <textarea asp-for="Abstract" class="form-control"></textarea>
+            <span asp-validation-for="Abstract" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TechnicalStack" class="form-label"></label>
+            <textarea asp-for="TechnicalStack" class="form-control"></textarea>
+            <span asp-validation-for="TechnicalStack" class="text-danger"></span>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.CurrentFileName))
+        {
+                <div class="mb-3">
+                    <label class="form-label">Current File</label>
+                    <div class="student-guide-box">
+                        <p class="mb-0">@Model.CurrentFileName</p>
+                    </div>
+                </div>
+        }
+
+        <div class="mb-4">
+            <label asp-for="ProposalFile" class="form-label"></label>
+            <input asp-for="ProposalFile" type="file" class="form-control" accept=".pdf,.doc,.docx" />
+            <span asp-validation-for="ProposalFile" class="text-danger"></span>
+            <small class="text-muted">Upload a new file only if you want to replace the current one.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Proposal</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
