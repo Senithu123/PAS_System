@@ -1,0 +1,17 @@
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\bin\Debug\net8.0\PAS.Infrastructure.deps.json
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\bin\Debug\net8.0\PAS.Infrastructure.runtimeconfig.json
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\bin\Debug\net8.0\PAS.Infrastructure.dll
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\bin\Debug\net8.0\PAS.Infrastructure.pdb
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\bin\Debug\net8.0\PAS.Core.dll
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\bin\Debug\net8.0\PAS.Core.pdb
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.AssemblyInfo.cs
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infr.45773A43.Up2Date
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.dll
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\refint\PAS.Infrastructure.dll
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.pdb
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\PAS.Infrastructure.genruntimeconfig.cache
+C:\Users\User\source\repos\PAS_BlindMatch\PAS.Infrastructure\obj\Debug\net8.0\ref\PAS.Infrastructure.dll

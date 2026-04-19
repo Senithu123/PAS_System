@@ -1,0 +1,42 @@
+﻿@model PAS.Web.ViewModels.SupervisorProfileViewModel
+
+@{
+    ViewData["Title"] = "Set Expertise";
+}
+
+<h2 class="mb-4">Set Preferred Research Area</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+        <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+        </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+        </div>
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="ResearchAreaId" class="form-label"></label>
+        <select asp-for="ResearchAreaId" asp-items="ViewBag.ResearchAreas" class="form-select">
+            <option value="">-- Select Research Area --</option>
+        </select>
+        <span asp-validation-for="ResearchAreaId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Expertise</button>
+    <a asp-action="Browse" class="btn btn-secondary">Go to Browse</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,102 @@
+﻿@model PAS.Web.ViewModels.SupervisorTopicViewModel
+
+@{
+    ViewData["Title"] = "Edit Project Topic";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Edit Project Topic</h2>
+        <p>Update your topic details and replace the attachment if needed.</p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor" asp-action="MyTopics" class="btn btn-light">My Topics</a>
+        <a asp-controller="Supervisor" asp-action="Dashboard" class="btn btn-outline-light">Dashboard</a>
+    </div>
+</div>
+
+<div class="supervisor-panel">
+    <div class="supervisor-panel-title">Edit Topic Form</div>
+
+    <form method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="ProjectTitle" class="form-label"></label>
+                <input asp-for="ProjectTitle" class="form-control" />
+                <span asp-validation-for="ProjectTitle" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="ResearchAreaId" class="form-label"></label>
+                <select asp-for="ResearchAreaId" asp-items="ViewBag.ResearchAreas" class="form-select">
+                    <option value="">-- Select Research Area --</option>
+                </select>
+                <span asp-validation-for="ResearchAreaId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="RequiredSkills" class="form-label"></label>
+                <textarea asp-for="RequiredSkills" class="form-control"></textarea>
+                <span asp-validation-for="RequiredSkills" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="ExpectedOutcomes" class="form-label"></label>
+                <textarea asp-for="ExpectedOutcomes" class="form-control"></textarea>
+                <span asp-validation-for="ExpectedOutcomes" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Capacity" class="form-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="DifficultyLevel" class="form-label"></label>
+                <select asp-for="DifficultyLevel" asp-items="ViewBag.DifficultyLevels" class="form-select">
+                    <option value="">-- Select Difficulty --</option>
+                </select>
+                <span asp-validation-for="DifficultyLevel" class="text-danger"></span>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.CurrentAttachmentFileName))
+            {
+                    <div class="col-md-12">
+                        <label class="form-label">Current Attachment</label>
+                        <div class="supervisor-guide-box">
+                            <p class="mb-0">@Model.CurrentAttachmentFileName</p>
+                        </div>
+                    </div>
+            }
+
+            <div class="col-md-12">
+                <label asp-for="AttachmentFile" class="form-label"></label>
+                <input asp-for="AttachmentFile" type="file" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx" />
+                <span asp-validation-for="AttachmentFile" class="text-danger"></span>
+                <small class="text-muted">Upload a new file only if you want to replace the current one.</small>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" name="submitAction" value="Draft" class="btn btn-secondary">Save as Draft</button>
+            <button type="submit" name="submitAction" value="Publish" class="btn btn-primary">Publish Topic</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

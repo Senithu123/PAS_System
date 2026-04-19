@@ -1,0 +1,110 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.SupervisorTopicListViewModel>
+
+@{
+    ViewData["Title"] = "My Topics";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>My Topics</h2>
+        <p>View, edit, delete, and download your submitted topics.</p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor"
+           asp-action="SubmitTopic"
+           class="btn btn-light d-inline-flex align-items-center justify-content-center text-center"
+           style="width: 180px; height: 52px;">
+            Submit Topic
+        </a>
+
+        <a asp-controller="Supervisor"
+           asp-action="Dashboard"
+           class="btn btn-outline-light d-inline-flex align-items-center justify-content-center text-center"
+           style="width: 180px; height: 52px;">
+            Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="supervisor-panel">
+    <div class="supervisor-panel-title">Submitted Topics</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+            <div class="alert alert-info mb-0">No topics submitted yet.</div>
+    }
+    else
+    {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Research Area</th>
+                        <th>Difficulty</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        <th>Attachment</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                            <tr>
+                                <td>@item.ProjectTitle</td>
+                                <td>@item.ResearchArea</td>
+                                <td>@item.DifficultyLevel</td>
+                                <td>@item.Capacity</td>
+                                <td>@item.Status</td>
+                                <td>
+                            @if (item.HasAttachment)
+                            {
+                                            <div>@item.AttachmentFileName</div>
+                                            <a asp-controller="Supervisor"
+                                               asp-action="DownloadTopicAttachment"
+                                               asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-secondary mt-2 d-inline-flex align-items-center justify-content-center text-center"
+                                               style="width: 110px; height: 40px;">
+                                                Download
+                                            </a>
+                            }
+                            else
+                            {
+                                            <span>No attachment</span>
+                            }
+                                </td>
+                                <td>@item.CreatedAt.ToLocalTime()</td>
+                                <td>
+                                    <div class="d-flex gap-2 justify-content-center align-items-center flex-wrap">
+                                        <a asp-controller="Supervisor"
+                                           asp-action="EditTopic"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-primary d-inline-flex align-items-center justify-content-center text-center"
+                                           style="width: 95px; height: 44px;">
+                                            Edit
+                                        </a>
+
+                                        <form asp-controller="Supervisor" asp-action="DeleteTopic" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-danger d-inline-flex align-items-center justify-content-center text-center"
+                                                    style="width: 95px; height: 44px;">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+</div>

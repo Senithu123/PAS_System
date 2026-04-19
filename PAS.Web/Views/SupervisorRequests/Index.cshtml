@@ -1,0 +1,91 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.SupervisorApprovalRequestListItemViewModel>
+
+@{
+    ViewData["Title"] = "Supervisor Requests";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Supervisor Requests</h2>
+        <p>Approve or reject supervisor applications submitted by users.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Admin" asp-action="Users" class="btn btn-outline-light">All Users</a>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Application List</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+            <div class="alert alert-info mb-0">No supervisor requests found.</div>
+    }
+    else
+    {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Requested Expertise</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                        <th>Requested</th>
+                        <th>Reviewed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                            <tr>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td>@item.Department</td>
+                                <td>@item.RequestedExpertise</td>
+                                <td>@item.Notes</td>
+                                <td>@item.Status</td>
+                                <td>@item.RequestedAt.ToLocalTime()</td>
+                                <td>@(item.ReviewedAt.HasValue ? item.ReviewedAt.Value.ToLocalTime().ToString() : "-")</td>
+                                <td>
+                            @if (item.Status == "Pending")
+                            {
+                                            <div class="d-flex gap-2 flex-wrap">
+                                                <form asp-controller="SupervisorRequests" asp-action="Approve" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                                </form>
+
+                                                <form asp-controller="SupervisorRequests" asp-action="Reject" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                                                </form>
+                                            </div>
+                            }
+                            else
+                            {
+                                            <span class="text-muted">Processed</span>
+                            }
+                                </td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+</div>

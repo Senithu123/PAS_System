@@ -1,0 +1,121 @@
+﻿@model PAS.Web.ViewModels.SupervisorTopicViewModel
+
+@{
+    ViewData["Title"] = "Submit Project Topic";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Submit Project Topic</h2>
+        <p>Create a topic as draft or publish it with an optional attachment.</p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor"
+           asp-action="Dashboard"
+           class="btn btn-light d-inline-flex align-items-center justify-content-center text-center"
+           style="width: 180px; height: 52px;">
+            Dashboard
+        </a>
+
+        <a asp-controller="Supervisor"
+           asp-action="MyTopics"
+           class="btn btn-outline-light d-inline-flex align-items-center justify-content-center text-center"
+           style="width: 180px; height: 52px;">
+            My Topics
+        </a>
+    </div>
+</div>
+
+<div class="supervisor-panel">
+    <div class="supervisor-panel-title">Topic Submission Form</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <form asp-action="SubmitTopic" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="ProjectTitle" class="form-label"></label>
+                <input asp-for="ProjectTitle" class="form-control" />
+                <span asp-validation-for="ProjectTitle" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="ResearchAreaId" class="form-label"></label>
+                <select asp-for="ResearchAreaId" asp-items="ViewBag.ResearchAreas" class="form-select">
+                    <option value="">-- Select Research Area --</option>
+                </select>
+                <span asp-validation-for="ResearchAreaId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="RequiredSkills" class="form-label"></label>
+                <textarea asp-for="RequiredSkills" class="form-control"></textarea>
+                <span asp-validation-for="RequiredSkills" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="ExpectedOutcomes" class="form-label"></label>
+                <textarea asp-for="ExpectedOutcomes" class="form-control"></textarea>
+                <span asp-validation-for="ExpectedOutcomes" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Capacity" class="form-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="DifficultyLevel" class="form-label"></label>
+                <select asp-for="DifficultyLevel" asp-items="ViewBag.DifficultyLevels" class="form-select">
+                    <option value="">-- Select Difficulty --</option>
+                </select>
+                <span asp-validation-for="DifficultyLevel" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="AttachmentFile" class="form-label"></label>
+                <input asp-for="AttachmentFile" type="file" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx" />
+                <span asp-validation-for="AttachmentFile" class="text-danger"></span>
+                <small class="text-muted">Allowed: PDF, DOC, DOCX, PPT, PPTX. Max size: 10 MB.</small>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4 flex-wrap">
+            <button type="submit"
+                    name="submitAction"
+                    value="Draft"
+                    class="btn btn-secondary d-inline-flex align-items-center justify-content-center text-center"
+                    style="width: 180px; height: 50px;">
+                Save Draft
+            </button>
+
+            <button type="submit"
+                    name="submitAction"
+                    value="Publish"
+                    class="btn btn-primary d-inline-flex align-items-center justify-content-center text-center"
+                    style="width: 180px; height: 50px;">
+                Publish Topic
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
