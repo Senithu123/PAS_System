@@ -1,0 +1,81 @@
+@model PAS.Web.ViewModels.PendingSupervisorStatusViewModel
+
+@{
+    ViewData["Title"] = "Supervisor Application Status";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Supervisor Application Status</h2>
+        <p>Your supervisor account is not active until admin reviews your request.</p>
+    </div>
+</div>
+
+<div class="supervisor-panel">
+    <div class="supervisor-panel-title">Application Details</div>
+
+    <div class="supervisor-guide-box">
+        <strong>Name</strong>
+        <p>@Model.FullName</p>
+    </div>
+
+    <div class="supervisor-guide-box">
+        <strong>Email</strong>
+        <p>@Model.Email</p>
+    </div>
+
+    <div class="supervisor-guide-box">
+        <strong>Department</strong>
+        <p>@Model.Department</p>
+    </div>
+
+    <div class="supervisor-guide-box">
+        <strong>Requested Expertise</strong>
+        <p>@Model.RequestedExpertise</p>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Notes))
+    {
+            <div class="supervisor-guide-box">
+                <strong>Notes</strong>
+                <p>@Model.Notes</p>
+            </div>
+    }
+
+    <div class="supervisor-guide-box">
+        <strong>Status</strong>
+        <p>@Model.Status</p>
+    </div>
+
+    <div class="supervisor-guide-box">
+        <strong>Requested At</strong>
+        <p>@Model.RequestedAt.ToLocalTime()</p>
+    </div>
+
+    @if (Model.ReviewedAt.HasValue)
+    {
+            <div class="supervisor-guide-box">
+                <strong>Reviewed At</strong>
+                <p>@Model.ReviewedAt.Value.ToLocalTime()</p>
+            </div>
+    }
+
+    @if (Model.Status == "Pending")
+    {
+            <div class="alert alert-info mt-3">
+                Your request is waiting for admin approval. Once approved, log in again and you will be redirected as a supervisor.
+            </div>
+    }
+    else if (Model.Status == "Rejected")
+    {
+            <div class="alert alert-danger mt-3">
+                Your supervisor request was rejected. Please contact the administrator if you think this is a mistake.
+            </div>
+    }
+    else if (Model.Status == "Approved")
+    {
+            <div class="alert alert-success mt-3">
+                Your request was approved. Please log out and log in again to access the supervisor dashboard.
+            </div>
+    }
+</div>
