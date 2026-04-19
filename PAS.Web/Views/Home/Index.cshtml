@@ -1,0 +1,54 @@
+﻿@model PAS.Web.ViewModels.HomeDashboardViewModel
+
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="landing-page-wrap">
+    <div class="landing-panel">
+
+        <div class="landing-header">
+            <img src="~/images/pas-logo.png" alt="PAS Logo" class="landing-logo" />
+        </div>
+
+        <div class="landing-main">
+            <div class="landing-left">
+                <h1 class="landing-title">Project Approval System</h1>
+                <p class="landing-subtitle">Blind Matching and Project Management Platform</p>
+
+                <div class="landing-buttons">
+                    <a asp-controller="Account" asp-action="Login" class="landing-btn landing-btn-student">
+                        Student Login
+                    </a>
+
+                    <a asp-controller="Account" asp-action="Login" class="landing-btn landing-btn-supervisor">
+                        Supervisor Login
+                    </a>
+
+                    <a asp-controller="Account" asp-action="Login" class="landing-btn landing-btn-admin">
+                        Admin Login
+                    </a>
+                </div>
+            </div>
+
+            <div class="landing-right">
+                <img src="~/images/pas-landing-illustration.png"
+                     alt="System Illustration"
+                     class="landing-illustration" />
+            </div>
+        </div>
+
+        <div class="landing-footer">
+            <div class="landing-footer-left">
+                <a href="#">Contact Us</a>
+                <span>|</span>
+                <a href="#">Help &amp; Support</a>
+            </div>
+
+            <div class="landing-footer-right">
+                &copy; 2026 PAS - Project Approval System. All rights reserved.
+            </div>
+        </div>
+
+    </div>
+</div>

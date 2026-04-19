@@ -1,0 +1,77 @@
+﻿@model PAS.Web.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-page-wrap">
+    <div class="auth-shell">
+        <div class="auth-left-panel">
+            <div class="auth-brand">
+                <img src="~/images/pas-logo.png" alt="PAS Logo" class="auth-logo" />
+                <span>Project Approval System</span>
+            </div>
+
+            <div class="auth-left-content">
+                <h1>Welcome Back</h1>
+                <p>
+                    Sign in to continue your project approval, supervisor review, and matching workflow.
+                </p>
+
+                <div class="auth-feature-list">
+                    <div class="auth-feature-item">Secure role-based access</div>
+                    <div class="auth-feature-item">Student, supervisor, and admin workflows</div>
+                    <div class="auth-feature-item">Supervisor approval and expertise setup</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-right-panel">
+            <div class="auth-form-card">
+                <div class="auth-form-header">
+                    <h2>Login</h2>
+                    <p>Enter your details to access the system.</p>
+                </div>
+
+                <form asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <input asp-for="ReturnUrl" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control auth-input" placeholder="Enter your email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control auth-input" placeholder="Enter your password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label"></label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn auth-submit-btn">Sign In</button>
+
+                    <div class="auth-bottom-text">
+                        Don’t have an account?
+                        <a asp-action="Register" asp-controller="Account">Create one</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="auth-page-wrap">
+    <div class="auth-shell">
+        <div class="auth-left-panel">
+            <div class="auth-brand">
+                <img src="~/images/pas-logo.png" alt="PAS Logo" class="auth-logo" />
+                <span>Project Approval System</span>
+            </div>
+
+            <div class="auth-left-content">
+                <h1>Create Account</h1>
+                <p>
+                    Choose how you want to join the platform and continue with the correct registration flow.
+                </p>
+
+                <div class="auth-feature-list">
+                    <div class="auth-feature-item">Students can submit and track project proposals</div>
+                    <div class="auth-feature-item">Supervisors can apply and wait for admin approval</div>
+                    <div class="auth-feature-item">Approved supervisors can set expertise and review proposals</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-right-panel">
+            <div class="auth-form-card">
+                <div class="auth-form-header">
+                    <h2>Select Registration Type</h2>
+                    <p>Choose whether you want to register as a student or apply as a supervisor.</p>
+                </div>
+
+                <div class="d-flex flex-column align-items-center gap-3">
+                    <a asp-controller="Account"
+                       asp-action="RegisterStudent"
+                       class="btn auth-submit-btn d-flex align-items-center justify-content-center text-center"
+                       style="width: 100%; max-width: 480px; height: 56px;">
+                        Register as Student
+                    </a>
+
+                    <a asp-controller="Account"
+                       asp-action="RegisterSupervisor"
+                       class="btn d-flex align-items-center justify-content-center text-center"
+                       style="width: 100%; max-width: 480px; height: 56px; border: 2px solid #2563eb; color: #2563eb; background: transparent; border-radius: 16px; font-weight: 700;">
+                        Apply as Supervisor
+                    </a>
+                </div>
+
+                <div class="auth-bottom-text mt-4 text-center">
+                    Already have an account?
+                    <a asp-action="Login" asp-controller="Account">Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

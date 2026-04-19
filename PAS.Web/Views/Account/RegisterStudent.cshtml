@@ -1,0 +1,85 @@
+﻿@model PAS.Web.ViewModels.RegisterStudentViewModel
+
+@{
+    ViewData["Title"] = "Register as Student";
+}
+
+<div class="auth-page-wrap">
+    <div class="auth-shell">
+        <div class="auth-left-panel">
+            <div class="auth-brand">
+                <img src="~/images/pas-logo.png" alt="PAS Logo" class="auth-logo" />
+                <span>Project Approval System</span>
+            </div>
+
+            <div class="auth-left-content">
+                <h1>Student Registration</h1>
+                <p>
+                    Create your student account to submit project proposals, save preferences, and track your progress.
+                </p>
+
+                <div class="auth-feature-list">
+                    <div class="auth-feature-item">Submit project proposals</div>
+                    <div class="auth-feature-item">Track proposal status</div>
+                    <div class="auth-feature-item">Save project preferences</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-right-panel">
+            <div class="auth-form-card">
+                <div class="auth-form-header">
+                    <h2>Register as Student</h2>
+                    <p>Create your student account to get started.</p>
+                </div>
+
+                <form asp-action="RegisterStudent" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control auth-input" placeholder="Enter your full name" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control auth-input" placeholder="Enter your email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control auth-input" placeholder="Create a password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control auth-input" placeholder="Confirm your password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn auth-submit-btn">Create Student Account</button>
+
+                    <div class="auth-bottom-text">
+                        Want to apply as a supervisor?
+                        <a asp-action="RegisterSupervisor" asp-controller="Account">Apply here</a>
+                    </div>
+
+                    <div class="auth-bottom-text mt-2">
+                        Already have an account?
+                        <a asp-action="Login" asp-controller="Account">Sign in</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
