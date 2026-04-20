@@ -1,0 +1,191 @@
+﻿@model PAS.Web.ViewModels.PaginatedAdminProposalPageViewModel
+
+@{
+    ViewData["Title"] = "Manage Proposals";
+}
+
+<h2 class="mb-4">Manage Proposals</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+        <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+        </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+        </div>
+}
+
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Total</h6>
+                <h4>@Model.Summary.TotalProposals</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Pending</h6>
+                <h4>@Model.Summary.PendingCount</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Under Review</h6>
+                <h4>@Model.Summary.UnderReviewCount</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Matched</h6>
+                <h4>@Model.Summary.MatchedCount</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Rejected</h6>
+                <h4>@Model.Summary.RejectedCount</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Withdrawn</h6>
+                <h4>@Model.Summary.WithdrawnCount</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="get" asp-action="Proposals" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control"
+               placeholder="Search by title or research area" />
+    </div>
+    <div class="col-md-3">
+        <select name="statusFilter" class="form-select">
+            <option value="">-- All Statuses --</option>
+            <option value="Pending" selected="@(Model.StatusFilter == "Pending")">Pending</option>
+            <option value="UnderReview" selected="@(Model.StatusFilter == "UnderReview")">Under Review</option>
+            <option value="Matched" selected="@(Model.StatusFilter == "Matched")">Matched</option>
+            <option value="Rejected" selected="@(Model.StatusFilter == "Rejected")">Rejected</option>
+            <option value="Withdrawn" selected="@(Model.StatusFilter == "Withdrawn")">Withdrawn</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-action="Proposals" class="btn btn-secondary">Clear</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Research Area</th>
+            <th>Status</th>
+            <th>Identity Reveal</th>
+            <th>Student</th>
+            <th>Supervisor</th>
+            <th>Status Update</th>
+            <th>Match Action</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var proposal in Model.Proposals)
+        {
+                <tr>
+                    <td>@proposal.Id</td>
+                    <td>@proposal.Title</td>
+                    <td>@proposal.ResearchArea</td>
+                    <td>@proposal.Status</td>
+                    <td>
+                    @if (proposal.IsIdentityRevealed)
+                    {
+                                <span class="text-success">Revealed</span>
+                    }
+                    else
+                    {
+                                <span class="text-danger">Hidden</span>
+                    }
+                    </td>
+                    <td>@proposal.StudentEmail</td>
+                    <td>@proposal.SupervisorEmail</td>
+                    <td>
+                        <form asp-action="UpdateProposalStatus" method="post" class="d-flex gap-2">
+                        @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@proposal.Id" />
+                            <select name="status" class="form-select form-select-sm">
+                                <option value="Pending" selected="@(proposal.Status == "Pending")">Pending</option>
+                                <option value="UnderReview" selected="@(proposal.Status == "UnderReview")">Under Review</option>
+                                <option value="Matched" selected="@(proposal.Status == "Matched")">Matched</option>
+                                <option value="Rejected" selected="@(proposal.Status == "Rejected")">Rejected</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                    @if (proposal.Status == "UnderReview")
+                    {
+                                <form asp-action="ConfirmMatch" method="post">
+                            @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@proposal.Id" />
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Confirm Match
+                                    </button>
+                                </form>
+                    }
+                    else if (proposal.Status == "Matched")
+                    {
+                                <span class="text-success">Matched</span>
+                    }
+                    else
+                    {
+                                <span class="text-muted">Not Ready</span>
+                    }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@proposal.Id" class="btn btn-sm btn-info">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+        <nav class="mt-3">
+            <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a class="page-link"
+                               asp-action="Proposals"
+                               asp-route-page="@i"
+                               asp-route-searchTerm="@Model.SearchTerm"
+                               asp-route-statusFilter="@Model.StatusFilter">
+                        @i
+                            </a>
+                        </li>
+            }
+            </ul>
+        </nav>
+}

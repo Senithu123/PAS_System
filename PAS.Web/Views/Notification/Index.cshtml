@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.NotificationItemViewModel>
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Notifications</h2>
+        <p>View your system alerts, updates, and matching messages.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <form asp-controller="Notification" asp-action="MarkAllAsRead" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-light">Mark All as Read</button>
+        </form>
+    </div>
+</div>
+
+<div class="student-panel">
+    <div class="student-panel-title">Your Notifications</div>
+
+    @if (!Model.Any())
+    {
+            <div class="alert alert-info mb-0">No notifications available.</div>
+    }
+    else
+    {
+            <div class="student-activity-list">
+            @foreach (var item in Model)
+            {
+                        <div class="student-activity-item @(item.IsRead ? "" : "notification-unread")">
+                            <div class="student-activity-dot"></div>
+                            <div class="flex-grow-1">
+                                <strong>@item.Title</strong>
+                                <div>@item.Message</div>
+                                <small class="text-muted">@item.Type • @item.CreatedAt.ToLocalTime()</small>
+                            </div>
+
+                    @if (!item.IsRead)
+                    {
+                                    <form asp-controller="Notification" asp-action="MarkAsRead" method="post" class="ms-3">
+                            @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-primary btn-sm">Mark as Read</button>
+                                    </form>
+                    }
+                        </div>
+            }
+            </div>
+    }
+</div>

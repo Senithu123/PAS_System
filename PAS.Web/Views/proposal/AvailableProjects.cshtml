@@ -1,0 +1,61 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.AvailableProjectViewModel>
+
+@{
+    ViewData["Title"] = "Available Projects";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Available Projects</h2>
+        <p>Browse project ideas and topics currently available in the system.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Proposal" asp-action="MyProposals" class="btn btn-outline-light">My Proposals</a>
+    </div>
+</div>
+
+<div class="student-panel">
+    <div class="student-panel-title">Search Projects</div>
+
+    <form method="get" asp-action="AvailableProjects" class="row g-2 mb-4">
+        <div class="col-md-9">
+            <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Search by title, research area, or technical stack" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+            <div class="alert alert-info mb-0">No available projects found.</div>
+    }
+    else
+    {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Proposal ID</th>
+                        <th>Title</th>
+                        <th>Research Area</th>
+                        <th>Technical Stack</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                            <tr>
+                                <td>@item.ProposalId</td>
+                                <td>@item.Title</td>
+                                <td>@item.ResearchArea</td>
+                                <td>@item.TechnicalStack</td>
+                                <td>@item.Status</td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+</div>

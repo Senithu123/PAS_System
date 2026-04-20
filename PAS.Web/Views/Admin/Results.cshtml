@@ -1,0 +1,72 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.AdminResultViewModel>
+
+@{
+    ViewData["Title"] = "Results";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Final Results</h2>
+        <p>View all matched projects and manually reassign supervisors if required.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Admin" asp-action="ResearchAreas" class="btn btn-outline-light">Research Areas</a>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Matched Projects</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info mb-0">No matched projects found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Proposal</th>
+                    <th>Research Area</th>
+                    <th>Student</th>
+                    <th>Student Email</th>
+                    <th>Supervisor</th>
+                    <th>Supervisor Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProposalTitle</td>
+                        <td>@item.ResearchArea</td>
+                        <td>@item.StudentName</td>
+                        <td>@item.StudentEmail</td>
+                        <td>@item.SupervisorName</td>
+                        <td>@item.SupervisorEmail</td>
+                        <td>@item.Status</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="ReassignMatch" asp-route-id="@item.ProposalId" class="btn btn-sm btn-primary">
+                                Reassign
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

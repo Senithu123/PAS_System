@@ -1,0 +1,57 @@
+﻿@model PAS.Web.ViewModels.SupervisorProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Supervisor Profile";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Supervisor Profile</h2>
+        <p>View your account details and supervision summary.</p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Supervisor" asp-action="AssignedStudents" class="btn btn-outline-light">Assigned Students</a>
+    </div>
+</div>
+
+<div class="supervisor-dashboard-grid">
+    <div class="supervisor-panel">
+        <div class="supervisor-panel-title">Profile Information</div>
+
+        <div class="supervisor-guide-box mb-3">
+            <strong>Full Name</strong>
+            <p>@Model.FullName</p>
+        </div>
+
+        <div class="supervisor-guide-box mb-3">
+            <strong>Email</strong>
+            <p>@Model.Email</p>
+        </div>
+
+        <div class="supervisor-guide-box">
+            <strong>Role</strong>
+            <p>@Model.Role</p>
+        </div>
+    </div>
+
+    <div class="supervisor-panel">
+        <div class="supervisor-panel-title">Supervision Summary</div>
+
+        <div class="supervisor-guide-box mb-3">
+            <strong>Expertise Area</strong>
+            <p>@Model.ExpertiseArea</p>
+        </div>
+
+        <div class="supervisor-guide-box mb-3">
+            <strong>Assigned Students</strong>
+            <p>@Model.AssignedStudentsCount</p>
+        </div>
+
+        <div class="supervisor-guide-box">
+            <strong>Under Review</strong>
+            <p>@Model.UnderReviewCount</p>
+        </div>
+    </div>
+</div>

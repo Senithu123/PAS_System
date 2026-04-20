@@ -1,0 +1,88 @@
+﻿@model PAS.Web.ViewModels.StudentMatchResultViewModel
+
+@{
+    ViewData["Title"] = "Match Result";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Match Result</h2>
+        <p>See the current status of your proposal matching process.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="Dashboard" class="btn btn-light">Student Dashboard</a>
+        <a asp-controller="Proposal" asp-action="MyProposals" class="btn btn-outline-light">My Proposals</a>
+    </div>
+</div>
+
+@if (!Model.HasProposal)
+{
+        <div class="student-panel">
+            <div class="alert alert-info mb-0">@Model.Message</div>
+        </div>
+}
+else if (!Model.IsMatched)
+{
+        <div class="student-panel">
+            <div class="student-panel-title">Matching in Progress</div>
+
+            <div class="student-guide-box mb-3">
+                <strong>Proposal Title</strong>
+                <p>@Model.ProposalTitle</p>
+            </div>
+
+            <div class="student-guide-box mb-3">
+                <strong>Research Area</strong>
+                <p>@Model.ResearchArea</p>
+            </div>
+
+            <div class="student-guide-box mb-3">
+                <strong>Current Status</strong>
+                <p>@Model.Status</p>
+            </div>
+
+            <div class="alert alert-info mb-0">
+            @Model.Message
+            </div>
+        </div>
+}
+else
+{
+        <div class="student-dashboard-grid">
+            <div class="student-panel">
+                <div class="student-panel-title">Assigned Project</div>
+
+                <div class="student-guide-box mb-3">
+                    <strong>Proposal Title</strong>
+                    <p>@Model.ProposalTitle</p>
+                </div>
+
+                <div class="student-guide-box">
+                    <strong>Research Area</strong>
+                    <p>@Model.ResearchArea</p>
+                </div>
+            </div>
+
+            <div class="student-panel">
+                <div class="student-panel-title">Assigned Supervisor</div>
+
+                <div class="student-guide-box mb-3">
+                    <strong>Name</strong>
+                    <p>@Model.SupervisorName</p>
+                </div>
+
+                <div class="student-guide-box">
+                    <strong>Email</strong>
+                    <p>@Model.SupervisorEmail</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="student-panel mt-4">
+            <div class="student-panel-title">Next Steps</div>
+            <div class="alert alert-success mb-0">
+            @Model.Message
+            </div>
+        </div>
+}

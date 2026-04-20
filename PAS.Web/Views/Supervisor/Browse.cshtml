@@ -1,0 +1,102 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.SupervisorProposalViewModel>
+
+@{
+    ViewData["Title"] = "Browse Proposals";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Browse Proposals</h2>
+        <p>Review proposals in your expertise area, download uploaded files, and match directly when ready.</p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Supervisor" asp-action="AssignedStudents" class="btn btn-outline-light">Assigned Students</a>
+    </div>
+</div>
+
+<div class="supervisor-panel">
+    <div class="supervisor-panel-title">Available Proposals</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info mb-0">No proposals available in your expertise area right now.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Research Area</th>
+                    <th>Technical Stack</th>
+                    <th>Status</th>
+                    <th>Uploaded File</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <strong>@item.Title</strong>
+                            <div class="text-muted mt-1">@item.Abstract</div>
+                        </td>
+                        <td>@item.ResearchArea</td>
+                        <td>@item.TechnicalStack</td>
+                        <td>@item.Status</td>
+                        <td>
+                            @if (item.HasUploadedFile)
+                            {
+                                <div>@item.FileName</div>
+                                <a asp-controller="Supervisor"
+                                   asp-action="DownloadProposalFile"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-secondary mt-2">
+                                    Download File
+                                </a>
+                            }
+                            else
+                            {
+                                <span>No file uploaded</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2 flex-wrap">
+                                @if (item.CanReview)
+                                {
+                                    <form asp-controller="Supervisor" asp-action="ExpressInterest" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-sm btn-secondary">Mark Under Review</button>
+                                    </form>
+                                }
+
+                                @if (item.CanMatch)
+                                {
+                                    <form asp-controller="Supervisor" asp-action="MatchProposal" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-sm btn-primary">Match Now</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

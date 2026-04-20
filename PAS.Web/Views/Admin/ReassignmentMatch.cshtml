@@ -1,0 +1,58 @@
+﻿@model PAS.Web.ViewModels.ReassignMatchViewModel
+
+@{
+    ViewData["Title"] = "Reassign Match";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Reassign Match</h2>
+        <p>Manually intervene and assign a different supervisor when necessary.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Results" class="btn btn-light">Results</a>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-outline-light">Dashboard</a>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Reassign Supervisor</div>
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <input asp-for="ProposalId" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="admin-guide-box">
+            <strong>Project Title</strong>
+            <p>@Model.ProposalTitle</p>
+        </div>
+
+        <div class="admin-guide-box">
+            <strong>Research Area</strong>
+            <p>@Model.ResearchArea</p>
+        </div>
+
+        <div class="admin-guide-box">
+            <strong>Current Supervisor</strong>
+            <p>@Model.CurrentSupervisorName</p>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="NewSupervisorId" class="form-label"></label>
+            <select asp-for="NewSupervisorId" asp-items="ViewBag.Supervisors" class="form-select">
+                <option value="">-- Select Supervisor --</option>
+            </select>
+            <span asp-validation-for="NewSupervisorId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Reassignment</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

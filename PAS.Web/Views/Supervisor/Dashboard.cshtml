@@ -1,0 +1,83 @@
+﻿@model PAS.Web.ViewModels.SupervisorDashboardViewModel
+
+@{
+    ViewData["Title"] = "Supervisor Dashboard";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Supervisor Dashboard</h2>
+        <p>
+            Review proposals in your expertise area, monitor matching progress, and manage your review activity.
+        </p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor" asp-action="SetExpertise" class="btn btn-light">Set Expertise</a>
+        <a asp-controller="Supervisor" asp-action="Browse" class="btn btn-outline-light">Browse Proposals</a>
+    </div>
+</div>
+
+<div class="supervisor-stats-grid">
+    <div class="supervisor-stat-card">
+        <span>Expertise Area</span>
+        <h3>@Model.ExpertiseArea</h3>
+    </div>
+
+    <div class="supervisor-stat-card">
+        <span>Available to Review</span>
+        <h3>@Model.AvailableToReview</h3>
+    </div>
+
+    <div class="supervisor-stat-card">
+        <span>Under Review</span>
+        <h3>@Model.UnderReviewCount</h3>
+    </div>
+
+    <div class="supervisor-stat-card">
+        <span>Matched</span>
+        <h3>@Model.MatchedCount</h3>
+    </div>
+</div>
+
+<div class="supervisor-dashboard-grid">
+    <div class="supervisor-panel">
+        <div class="supervisor-panel-title">Recent Supervisor Activity</div>
+
+        @if (Model.RecentItems.Any())
+        {
+                <div class="supervisor-activity-list">
+                @foreach (var item in Model.RecentItems)
+                {
+                            <div class="supervisor-activity-item">
+                                <div class="supervisor-activity-dot"></div>
+                                <span>@item</span>
+                            </div>
+                }
+                </div>
+        }
+        else
+        {
+                <div class="alert alert-info mb-0">No recent supervisor activity found.</div>
+        }
+    </div>
+
+    <div class="supervisor-panel">
+        <div class="supervisor-panel-title">Review Workflow</div>
+
+        <div class="supervisor-guide-box">
+            <strong>Step 1</strong>
+            <p>Set your preferred research area so the system shows relevant anonymous proposals.</p>
+        </div>
+
+        <div class="supervisor-guide-box">
+            <strong>Step 2</strong>
+            <p>Browse proposals without student identity information and review their content fairly.</p>
+        </div>
+
+        <div class="supervisor-guide-box">
+            <strong>Step 3</strong>
+            <p>Express interest in suitable proposals and wait for admin confirmation of the final match.</p>
+        </div>
+    </div>
+</div>

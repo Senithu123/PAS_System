@@ -1,0 +1,57 @@
+﻿@model PAS.Web.ViewModels.StudentProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Student Profile";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Student Profile</h2>
+        <p>View your account and proposal summary details.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Proposal" asp-action="MyProposals" class="btn btn-outline-light">My Proposals</a>
+    </div>
+</div>
+
+<div class="student-dashboard-grid">
+    <div class="student-panel">
+        <div class="student-panel-title">Profile Information</div>
+
+        <div class="student-guide-box mb-3">
+            <strong>Full Name</strong>
+            <p>@Model.FullName</p>
+        </div>
+
+        <div class="student-guide-box mb-3">
+            <strong>Email</strong>
+            <p>@Model.Email</p>
+        </div>
+
+        <div class="student-guide-box">
+            <strong>Role</strong>
+            <p>@Model.Role</p>
+        </div>
+    </div>
+
+    <div class="student-panel">
+        <div class="student-panel-title">Proposal Summary</div>
+
+        <div class="student-guide-box mb-3">
+            <strong>Total Proposals</strong>
+            <p>@Model.TotalProposals</p>
+        </div>
+
+        <div class="student-guide-box mb-3">
+            <strong>Pending / Under Review</strong>
+            <p>@Model.PendingCount</p>
+        </div>
+
+        <div class="student-guide-box">
+            <strong>Matched</strong>
+            <p>@Model.MatchedCount</p>
+        </div>
+    </div>
+</div>

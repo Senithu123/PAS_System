@@ -1,0 +1,93 @@
+﻿@model PAS.Web.ViewModels.StudentDashboardViewModel
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>Student Dashboard</h2>
+        <p>
+            Track your proposal progress, manage submissions, and monitor matching updates.
+        </p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="Create" class="btn btn-light">Submit New Proposal</a>
+        <a asp-controller="Proposal" asp-action="MyProposals" class="btn btn-outline-light">View My Proposals</a>
+    </div>
+</div>
+
+<div class="student-stats-grid">
+    <div class="student-stat-card">
+        <span>Total</span>
+        <h3>@Model.TotalProposals</h3>
+    </div>
+
+    <div class="student-stat-card">
+        <span>Pending</span>
+        <h3>@Model.PendingCount</h3>
+    </div>
+
+    <div class="student-stat-card">
+        <span>Under Review</span>
+        <h3>@Model.UnderReviewCount</h3>
+    </div>
+
+    <div class="student-stat-card">
+        <span>Matched</span>
+        <h3>@Model.MatchedCount</h3>
+    </div>
+
+    <div class="student-stat-card">
+        <span>Rejected</span>
+        <h3>@Model.RejectedCount</h3>
+    </div>
+
+    <div class="student-stat-card">
+        <span>Withdrawn</span>
+        <h3>@Model.WithdrawnCount</h3>
+    </div>
+</div>
+
+<div class="student-dashboard-grid">
+    <div class="student-panel">
+        <div class="student-panel-title">Recent Proposal Activity</div>
+
+        @if (Model.RecentItems.Any())
+        {
+                    <div class="student-activity-list">
+                @foreach (var item in Model.RecentItems)
+                {
+                                    <div class="student-activity-item">
+                                        <div class="student-activity-dot"></div>
+                                        <span>@item</span>
+                                    </div>
+                }
+                    </div>
+        }
+        else
+        {
+                    <div class="alert alert-info mb-0">No recent activity found.</div>
+        }
+    </div>
+
+    <div class="student-panel">
+        <div class="student-panel-title">Quick Guide</div>
+
+        <div class="student-guide-box">
+            <strong>Step 1</strong>
+            <p>Submit your project proposal with complete and clear details.</p>
+        </div>
+
+        <div class="student-guide-box">
+            <strong>Step 2</strong>
+            <p>Track the status as it moves from pending to review.</p>
+        </div>
+
+        <div class="student-guide-box">
+            <strong>Step 3</strong>
+            <p>Wait for admin confirmation to reveal the final match result.</p>
+        </div>
+    </div>
+</div>

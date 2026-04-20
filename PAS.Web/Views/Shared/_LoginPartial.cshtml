@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PAS.Core.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var displayName = !string.IsNullOrWhiteSpace(currentUser?.FullName)
+        ? currentUser.FullName
+        : User.Identity?.Name ?? "Account";
+
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <span class="text-white fw-semibold">@displayName</span>
+
+            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-light">Logout</button>
+            </form>
+        </div>
+}
+else
+{
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <a asp-controller="Account" asp-action="Login" class="btn btn-sm btn-light">Login</a>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-sm btn-outline-light">Register</a>
+        </div>
+}

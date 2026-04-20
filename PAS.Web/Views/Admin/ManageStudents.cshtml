@@ -1,0 +1,66 @@
+﻿@model PAS.Web.ViewModels.AdminStudentPageViewModel
+
+@{
+    ViewData["Title"] = "Manage Students";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Manage Students</h2>
+        <p>View and manage all student accounts in the system.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Admin" asp-action="Users" class="btn btn-outline-light">All Users</a>
+    </div>
+</div>
+
+<div class="admin-stats-grid">
+    <div class="admin-stat-card">
+        <span>Total Students</span>
+        <h3>@Model.TotalStudents</h3>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Student Search</div>
+
+    <form method="get" asp-action="ManageStudents" class="row g-2 mb-4">
+        <div class="col-md-9">
+            <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Search by student name or email" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    @if (!Model.Students.Any())
+    {
+            <div class="alert alert-info mb-0">No students found.</div>
+    }
+    else
+    {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Total Proposals</th>
+                        <th>Matched</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Students)
+                {
+                            <tr>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td>@item.TotalProposals</td>
+                                <td>@item.MatchedCount</td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+</div>

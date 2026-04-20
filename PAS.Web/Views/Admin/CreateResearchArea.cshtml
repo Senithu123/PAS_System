@@ -1,0 +1,40 @@
+﻿@model PAS.Web.ViewModels.ResearchAreaFormViewModel
+
+@{
+    ViewData["Title"] = "Add Research Area";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Add Research Area</h2>
+        <p>Create a new research area for students, supervisors, and topics.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="ResearchAreas" class="btn btn-light">Research Areas</a>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-outline-light">Dashboard</a>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">New Research Area</div>
+
+    <form asp-action="CreateResearchArea" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-4">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Research Area</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.AdminResearchAreaListItemViewModel>
+
+@{
+    ViewData["Title"] = "Research Areas";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Research Areas</h2>
+        <p>Create, update, and remove the valid research areas used in the system.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Admin" asp-action="CreateResearchArea" class="btn btn-outline-light">Add Research Area</a>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Research Area Management</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info mb-0">No research areas found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Proposals</th>
+                    <th>Supervisor Profiles</th>
+                    <th>Supervisor Topics</th>
+                    <th>Total Usage</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var area in Model)
+                {
+                    <tr>
+                        <td>@area.Name</td>
+                        <td>@area.ProposalCount</td>
+                        <td>@area.SupervisorProfileCount</td>
+                        <td>@area.SupervisorTopicCount</td>
+                        <td>@area.TotalUsage</td>
+                        <td>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a asp-controller="Admin" asp-action="EditResearchArea" asp-route-id="@area.Id" class="btn btn-sm btn-primary">
+                                    Edit
+                                </a>
+
+                                <form asp-controller="Admin" asp-action="DeleteResearchArea" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@area.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

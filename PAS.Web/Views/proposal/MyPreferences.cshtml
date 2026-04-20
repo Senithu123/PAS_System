@@ -1,0 +1,94 @@
+﻿@model PAS.Web.ViewModels.StudentPreferencesPageViewModel
+
+@{
+    ViewData["Title"] = "My Preferences";
+}
+
+<div class="student-dash-hero">
+    <div>
+        <h2>My Preferences</h2>
+        <p>Select available projects and rank them based on your interest.</p>
+    </div>
+
+    <div class="student-dash-hero-actions">
+        <a asp-controller="Proposal" asp-action="AvailableProjects" class="btn btn-light">Available Projects</a>
+        <a asp-controller="Proposal" asp-action="Dashboard" class="btn btn-outline-light">Dashboard</a>
+    </div>
+</div>
+
+<div class="student-dashboard-grid">
+    <div class="student-panel">
+        <div class="student-panel-title">Add Preference</div>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+
+        <form asp-action="MyPreferences" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Input.ProjectProposalId" class="form-label"></label>
+                <select asp-for="Input.ProjectProposalId" asp-items="ViewBag.AvailableProjects" class="form-select">
+                    <option value="">-- Select Project --</option>
+                </select>
+                <span asp-validation-for="Input.ProjectProposalId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.PreferenceRank" class="form-label"></label>
+                <input asp-for="Input.PreferenceRank" class="form-control" />
+                <span asp-validation-for="Input.PreferenceRank" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Preference</button>
+        </form>
+    </div>
+
+    <div class="student-panel">
+        <div class="student-panel-title">Saved Preferences</div>
+
+        @if (!Model.Preferences.Any())
+        {
+                <div class="alert alert-info mb-0">No preferences saved yet.</div>
+        }
+        else
+        {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Project</th>
+                            <th>Research Area</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.Preferences)
+                    {
+                                <tr>
+                                    <td>@item.PreferenceRank</td>
+                                    <td>@item.ProjectTitle</td>
+                                    <td>@item.ResearchArea</td>
+                                    <td>
+                                        <form asp-action="DeletePreference" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                    }
+                    </tbody>
+                </table>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

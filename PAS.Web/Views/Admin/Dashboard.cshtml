@@ -1,0 +1,93 @@
+﻿@model PAS.Web.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Admin Dashboard</h2>
+        <p>
+            Manage users, monitor proposal flow, and control blind matching across the system.
+        </p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Users" class="btn btn-light">Manage Users</a>
+        <a asp-controller="Admin" asp-action="Proposals" class="btn btn-outline-light">Manage Proposals</a>
+    </div>
+</div>
+
+<div class="admin-stats-grid">
+    <div class="admin-stat-card">
+        <span>Students</span>
+        <h3>@Model.TotalStudents</h3>
+    </div>
+
+    <div class="admin-stat-card">
+        <span>Supervisors</span>
+        <h3>@Model.TotalSupervisors</h3>
+    </div>
+
+    <div class="admin-stat-card">
+        <span>Total Proposals</span>
+        <h3>@Model.TotalProposals</h3>
+    </div>
+
+    <div class="admin-stat-card">
+        <span>Pending</span>
+        <h3>@Model.PendingCount</h3>
+    </div>
+
+    <div class="admin-stat-card">
+        <span>Under Review</span>
+        <h3>@Model.UnderReviewCount</h3>
+    </div>
+
+    <div class="admin-stat-card">
+        <span>Matched</span>
+        <h3>@Model.MatchedCount</h3>
+    </div>
+</div>
+
+<div class="admin-dashboard-grid">
+    <div class="admin-panel">
+        <div class="admin-panel-title">Recent System Activity</div>
+
+        @if (Model.RecentItems.Any())
+        {
+                <div class="admin-activity-list">
+                @foreach (var item in Model.RecentItems)
+                {
+                            <div class="admin-activity-item">
+                                <div class="admin-activity-dot"></div>
+                                <span>@item</span>
+                            </div>
+                }
+                </div>
+        }
+        else
+        {
+                <div class="alert alert-info mb-0">No recent admin activity found.</div>
+        }
+    </div>
+
+    <div class="admin-panel">
+        <div class="admin-panel-title">Admin Workflow</div>
+
+        <div class="admin-guide-box">
+            <strong>Step 1</strong>
+            <p>Review the system-wide proposal counts and current matching progress.</p>
+        </div>
+
+        <div class="admin-guide-box">
+            <strong>Step 2</strong>
+            <p>Manage users, proposal statuses, and supervisor interest through the admin module.</p>
+        </div>
+
+        <div class="admin-guide-box">
+            <strong>Step 3</strong>
+            <p>Confirm final matches and reveal identities only when the proposal is ready.</p>
+        </div>
+    </div>
+</div>

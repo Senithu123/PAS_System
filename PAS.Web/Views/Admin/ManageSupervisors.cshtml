@@ -1,0 +1,68 @@
+﻿@model PAS.Web.ViewModels.AdminSupervisorPageViewModel
+
+@{
+    ViewData["Title"] = "Manage Supervisors";
+}
+
+<div class="admin-dash-hero">
+    <div>
+        <h2>Manage Supervisors</h2>
+        <p>View and manage all supervisor accounts in the system.</p>
+    </div>
+
+    <div class="admin-dash-hero-actions">
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-light">Dashboard</a>
+        <a asp-controller="Admin" asp-action="Users" class="btn btn-outline-light">All Users</a>
+    </div>
+</div>
+
+<div class="admin-stats-grid">
+    <div class="admin-stat-card">
+        <span>Total Supervisors</span>
+        <h3>@Model.TotalSupervisors</h3>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="admin-panel-title">Supervisor Search</div>
+
+    <form method="get" asp-action="ManageSupervisors" class="row g-2 mb-4">
+        <div class="col-md-9">
+            <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Search by supervisor name or email" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    @if (!Model.Supervisors.Any())
+    {
+            <div class="alert alert-info mb-0">No supervisors found.</div>
+    }
+    else
+    {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Expertise Area</th>
+                        <th>Assigned Students</th>
+                        <th>Topics Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Supervisors)
+                {
+                            <tr>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td>@item.ExpertiseArea</td>
+                                <td>@item.AssignedStudentsCount</td>
+                                <td>@item.TopicsSubmittedCount</td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+</div>

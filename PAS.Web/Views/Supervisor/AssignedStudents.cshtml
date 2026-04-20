@@ -1,0 +1,56 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.AssignedStudentViewModel>
+
+@{
+    ViewData["Title"] = "Assigned Students";
+}
+
+<div class="supervisor-dash-hero">
+    <div>
+        <h2>Assigned Students</h2>
+        <p>View students assigned to you after final match confirmation.</p>
+    </div>
+
+    <div class="supervisor-dash-hero-actions">
+        <a asp-controller="Supervisor" asp-action="Dashboard" class="btn btn-light">Supervisor Dashboard</a>
+        <a asp-controller="Supervisor" asp-action="Browse" class="btn btn-outline-light">Browse Proposals</a>
+    </div>
+</div>
+
+<div class="supervisor-panel">
+    <div class="supervisor-panel-title">Matched Students</div>
+
+    @if (!Model.Any())
+    {
+            <div class="alert alert-info mb-0">
+                No assigned students found yet.
+            </div>
+    }
+    else
+    {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Proposal ID</th>
+                        <th>Student Name</th>
+                        <th>Student Email</th>
+                        <th>Proposal Title</th>
+                        <th>Research Area</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                            <tr>
+                                <td>@item.ProposalId</td>
+                                <td>@item.StudentName</td>
+                                <td>@item.StudentEmail</td>
+                                <td>@item.ProposalTitle</td>
+                                <td>@item.ResearchArea</td>
+                                <td>@item.Status</td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+</div>

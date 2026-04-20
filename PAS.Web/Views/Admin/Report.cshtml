@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.ProposalDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Proposal Report";
+}
+
+<h2 class="mb-4">Proposal Report</h2>
+
+@if (!Model.Any())
+{
+        <div class="alert alert-info">No proposal data available.</div>
+}
+else
+{
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Research Area</th>
+                    <th>Status</th>
+                    <th>Student</th>
+                    <th>Supervisor</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var proposal in Model)
+            {
+                        <tr>
+                            <td>@proposal.Id</td>
+                            <td>@proposal.Title</td>
+                            <td>@proposal.ResearchArea</td>
+                            <td>@proposal.Status</td>
+                            <td>@proposal.StudentEmail</td>
+                            <td>@proposal.SupervisorEmail</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}

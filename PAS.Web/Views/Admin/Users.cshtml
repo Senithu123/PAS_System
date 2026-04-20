@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PAS.Web.ViewModels.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<h2 class="mb-4">Manage Users</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Roles</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.FullName</td>
+                    <td>
+                    @if (user.Roles.Any())
+                    {
+                        @string.Join(", ", user.Roles)
+                    }
+                    else
+                    {
+                                <span>No Role Assigned</span>
+                    }
+                    </td>
+                    <td>
+                    @if (!user.Roles.Contains("Student"))
+                    {
+                                <form asp-action="AssignStudentRole" method="post">
+                            @Html.AntiForgeryToken()
+                                    <input type="hidden" name="userId" value="@user.UserId" />
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        Assign Student Role
+                                    </button>
+                                </form>
+                    }
+                    else
+                    {
+                                <span class="text-success">Already Student</span>
+                    }
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
